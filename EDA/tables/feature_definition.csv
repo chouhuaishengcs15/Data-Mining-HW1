@@ -1,0 +1,5 @@
+﻿feature,formula,formula_readable,rationale,unit,source_features,source_columns,status,limitation
+HouseAge,YrSold - YearBuilt,成交年份 - 建造年份,表示房屋在成交年份的年齡，探索屋齡與價格的關係。,years,YrSold;YearBuilt,成交年份;建造年份,exploratory_only_not_model_eligible,依 P1，YrSold 為預測時不可用的成交資訊；此公式不得直接用於正式模型。若需屋齡，必須先明確提供估價當時可取得的年份，不能以成交年替代。
+TotalSF,TotalBsmtSF + 1stFlrSF + 2ndFlrSF,地下室總面積平方英尺 + 一樓面積平方英尺 + 二樓面積平方英尺,整合地下室、一樓與二樓面積，探索整體空間規模的價格關聯。,sq ft,TotalBsmtSF;1stFlrSF;2ndFlrSF,地下室總面積平方英尺;一樓面積平方英尺;二樓面積平方英尺,candidate_pending_step4,不同空間不一定具有相同價值。與全部三個分項同時入模會產生 exact linear dependence；Step 4 應比較替換或保留方案。
+QualityArea,OverallQual * GrLivArea,整體品質1到10分 * 地上居住面積平方英尺,品質與面積的 Interaction，探索不同品質下的面積價格關係。,rating point * sq ft,OverallQual;GrLivArea,整體品質1到10分;地上居住面積平方英尺,candidate_pending_step4,品質分數使用現有 1–10 編碼。若驗證 Interaction，原始 main effects 原則上同時保留；本特徵是原始面積乘品質，不是之前的 log 面積乘品質。
+LogLotArea,log1p(LotArea),ln(1 + 地塊面積平方英尺),測試地塊面積的 nonlinear relationship，壓縮大面積的相對差距。,log-transformed sq-ft numeric value,LotArea,地塊面積平方英尺,candidate_pending_step4,直接對 readable 原始單位計算；不可再對 P1 已 Box-Cox 或縮放的欄位套用相同公式。

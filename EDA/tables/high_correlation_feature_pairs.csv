@@ -1,0 +1,4 @@
+﻿feature_1,feature_1_english,feature_2,feature_2_english,pearson_r,abs_r,n_observations,threshold,status
+車庫車位數,GarageCars,車庫面積平方英尺,GarageArea,0.8888032833186439,0.8888032833186439,1166,abs(r) > 0.8,exploratory_candidate_for_ablation
+地上居住面積平方英尺,GrLivArea,地上房間總數,TotRmsAbvGrd,0.8257263262756551,0.8257263262756551,1166,abs(r) > 0.8,exploratory_candidate_for_ablation
+地下室總面積平方英尺,TotalBsmtSF,一樓面積平方英尺,1stFlrSF,0.808400321005057,0.808400321005057,1166,abs(r) > 0.8,exploratory_candidate_for_ablation

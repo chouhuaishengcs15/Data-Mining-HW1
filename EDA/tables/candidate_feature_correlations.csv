@@ -1,0 +1,12 @@
+﻿feature,role,target,n,Pearson_r,Spearman_rho,abs_Pearson_r,status
+HouseAge,candidate,log_SalePrice,1166,-0.5776074221885376,-0.6409535475100612,0.5776074221885376,exploratory_only_not_model_eligible
+TotalSF,candidate,log_SalePrice,1166,0.8221655232888594,0.8137719903937568,0.8221655232888594,candidate_pending_step4
+QualityArea,candidate,log_SalePrice,1166,0.8358741288932506,0.8496146396833982,0.8358741288932506,candidate_pending_step4
+LogLotArea,candidate,log_SalePrice,1166,0.4150989629334987,0.4643759786709616,0.4150989629334987,candidate_pending_step4
+YearBuilt,original_reference,log_SalePrice,1166,0.5773258168121728,0.6442195173538222,0.5773258168121728,original_reference
+TotalBsmtSF,original_reference,log_SalePrice,1166,0.6411346784136726,0.5962004896330878,0.6411346784136726,original_reference
+1stFlrSF,original_reference,log_SalePrice,1166,0.6100580496347532,0.567410443591228,0.6100580496347532,original_reference
+2ndFlrSF,original_reference,log_SalePrice,1166,0.3144502253741589,0.2860387153934389,0.3144502253741589,original_reference
+OverallQual,original_reference,log_SalePrice,1166,0.8133043046948177,0.8026797184325186,0.8133043046948177,original_reference
+GrLivArea,original_reference,log_SalePrice,1166,0.7193807656299168,0.7248090090845242,0.7193807656299168,original_reference
+LotArea,original_reference,log_SalePrice,1166,0.26122708643357984,0.4643759786709616,0.26122708643357984,original_reference
