@@ -1,0 +1,4 @@
+model,mean_encoded_features,mean_rank_deficiency,mean_nonzero_coefficients,mean_nonzero_fraction,mean_pairwise_coefficient_cosine,mean_pairwise_nonzero_jaccard,median_feature_sign_consistency_when_active
+ElasticNet,209.8,22.6,113.4,0.5405559268740457,0.960367241722674,0.6714780499260241,1.0
+Lasso,209.8,22.6,107.8,0.513918655663917,0.9538170007399701,0.6653901834825013,1.0
+Ridge,209.8,22.6,209.8,1.0,0.9606784354981741,0.9607476635514018,1.0
