@@ -1,11 +1,12 @@
 # Table 4：係數分析
 
-報告位置：8.1 Coefficients & Statistical Significance。保留最終模型全部 214 個編碼後特徵。
+報告位置：8.1 Coefficients & Statistical Significance。
 
 - Beta 表示每一個 training SD 對 log1p 價格的係數，不是美元。
-- 95% CI 與近似 p-value 來自 P3 的 1,000 次 bootstrap；固定前處理與選定參數，不包含整個選模過程的不確定性。
+- 95% CI 與近似 p-value 來自 P3 的 1,000 次 bootstrap；可以拿來看係數大概穩不穩，但不要把它當成非常嚴格的因果結論。
 - p-value 為未校正值；28 欄 p<.05，Holm 校正後沒有 p<.05。109 欄係數非零，29 欄未校正 CI 不含 0。
-- VIF 的 inf 表示無限大，共 159 欄，反映 one-hot 與相關特徵的線性相依；不能把單一係數當成獨立因果效果。
+- VIF 的 inf 表示無限大，共 159 欄，代表有些 feature 之間高度相關，甚至可以被其他 feature 推算出來，所以不適合把單一係數直接解讀成某個 feature 的獨立影響。
+- 建議正文不要放完整 214 個 predictors，可以挑幾個比較重要、也跟前面 EDA / Feature Engineering 有連結的 feature，例如 QualityArea、GrLivArea、OverallQual、YearBuilt、OverallCond、LotArea。其中 QualityArea 建議保留，因為它是 H1 的主要 engineered feature，也是最後模型有使用的變數。
 
 | Feature | Beta per training SD | 95% CI | p-value | VIF |
 |---|---|---|---|---|
