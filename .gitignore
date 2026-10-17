@@ -28,5 +28,4 @@ env/
 *.fls
 *.out
 *.synctex.gz
-report/paper/main.pdf
 report/paper_overleaf.zip
