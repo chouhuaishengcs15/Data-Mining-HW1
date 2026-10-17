@@ -1,0 +1,19 @@
+% Owner: W1  |  Budget: ~0.5--0.75 column  |  5 pts
+% Slides p.18. Conclusion: answer the RQ with key numbers; which features
+% mattered and why; one actionable recommendation; NO new results.
+% Limitations: coverage; linearity/extrapolation; threshold assumptions; next experiment.
+% Numbers: results/Results_Master.xlsx (I2).
+\section{Conclusion and Limitations}
+\label{sec:conclusion}
+
+\paragraph{Conclusion.}
+Our answer to the research question is yes: using only pre-sale attributes, the Elastic Net reaches a test MAE of 14{,}423~USD, within the 15{,}000~USD threshold, consistent with its CV MAE (13{,}366 $\pm$ 809~USD) and 1{,}961~USD below the Random Forest ($p = 0.017$).
+The quality $\times$ living-area interaction mattered most, because space is worth more in a better-built house; with living area and construction year it carries the largest coefficients, while a correlation ranking alone (top-20 features) hurt accuracy.
+Sellers and agents can use the model as a starting point for typical homes, but for high-quality and newly built homes (MAE 27{,}636~USD for OverallQual $\geq$ 8) they should allow a wider margin and seek a formal appraisal.
+
+\paragraph{Limitations.}
+The data cover one city in 2006--2010 (1{,}458 sales) and may not transfer to other markets or periods.
+The model underpredicts high-end homes and should not be used beyond the observed size and quality range.
+The threshold bounds the average error only: individual errors reach 137{,}719~USD, and its value rests partly on the final model's own cross-validation.
+CV errors are slightly optimistic because the same folds were used for tuning.
+As a next step, we would add a listing-time new-construction flag (\S\ref{sec:analysis}) and test whether it closes the gap for high-end new homes.

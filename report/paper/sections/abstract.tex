@@ -1,0 +1,11 @@
+% Owner: W1  |  <= 150 words (currently ~135)  |  7 pts (shared with §1)
+% Slides p.6: task, approach, and the main quantitative result.
+% Numbers: results/Results_Master.xlsx (I2).
+\begin{abstract}
+Sellers and agents must set an asking price before any offer arrives, and buyers must judge whether that price is reasonable.
+We predict residential sale prices in Ames, Iowa, using only attributes available before a sale, excluding the sale date, type and condition.
+On 1{,}458 sales, we compare OLS, Ridge, Lasso and Elastic Net with a training-mean, a single-feature and a Random Forest baseline under fixed 5-fold cross-validation, and evaluate once on 292 sealed test houses.
+Exploratory analysis motivated a quality $\times$ living-area interaction, which lowered the cross-validated RMSE by 6.8\% and improved every fold.
+The final Elastic Net reaches a test MAE of 14{,}423~USD ($R^2 = 0.935$), meeting a pre-specified 15{,}000~USD threshold, and reduces the per-house error by 1{,}961~USD relative to the Random Forest (paired permutation $p = 0.017$).
+Errors remain largest for high-quality homes.
+\end{abstract}

@@ -1,0 +1,80 @@
+% Owner: W2  |  Budget: ~1.75 columns  |  18 pts
+% Sources: results/tables/02_model_comparison.md, 03_feature_ablation.md (I2)
+\section{Results}
+\label{sec:results}
+
+\begin{table*}[t]
+\centering
+\footnotesize
+\begin{tabular}{@{}l r r r r r@{}}
+\toprule
+\textbf{Model} & \textbf{CV MAE} & \textbf{CV RMSE} & \textbf{Test MAE} & \textbf{Test RMSE} & \textbf{Test $R^2$} \\
+\midrule
+Training mean              & 56{,}392 $\pm$ 1{,}244 & 77{,}190 $\pm$ 4{,}334 & 62{,}580 & 87{,}620 & $-0.001$ \\
+Single-feature OLS (GrLivArea) & 37{,}160 $\pm$ 2{,}295 & 53{,}092 $\pm$ 2{,}645 & 38{,}474 & 57{,}594 & 0.568 \\
+Random Forest (raw)        & 16{,}554 $\pm$ 958     & 26{,}107 $\pm$ 2{,}431 & 16{,}384 & 27{,}018 & 0.905 \\
+\textbf{Elastic Net + QualityArea} & \textbf{13{,}366 $\pm$ 809} & \textbf{19{,}925 $\pm$ 2{,}274} & \textbf{14{,}423} & \textbf{22{,}340} & \textbf{0.935} \\
+\bottomrule
+\end{tabular}
+\caption{Main results. Errors in USD. CV: mean $\pm$ SD over the same 5 folds; Test: 292 held-out houses, evaluated once. Only Elastic Net meets the 15{,}000~USD MAE threshold.}
+\label{tab:main}
+\end{table*}
+
+\subsection{Main Results}
+% Slides p.14 (8%): every method; best per column in bold; compare against the
+% threshold; why we win/lose vs the strong baseline; name the significance test.
+% Caution (I2): same-feature Lasso CV MAE = 13,361 -- do not claim EN beats all
+% candidates; CV was also used for tuning (not nested CV).
+Under the same folds and test set (Table~\ref{tab:main}), only the Elastic Net meets the 15{,}000~USD threshold, with a test MAE of 14{,}423~USD.
+This is within two fold SDs of its CV MAE; the Random Forest misses the threshold (16{,}384~USD).
+The Elastic Net's per-house absolute error is 1{,}961~USD lower (paired bootstrap over test houses, 5{,}000 resamples: 95\% CI $[-3{,}847, -399]$; paired permutation test, 10{,}000 permutations: $p = 0.017$).
+The gain is small but holds in every size and quality slice of the test set, most for large homes (23{,}372 vs.\ 27{,}316~USD MAE).
+
+Two reasons likely explain the win.
+First, with 1{,}166 sales and over 200 predictors, the data are too small for a forest to learn smooth size and quality effects, while log price is close to linear in them (Figure~\ref{fig:eda}).
+Second, trees cannot extrapolate, which hurts most for the largest and most expensive homes.
+Lasso ties in CV (\S\ref{sec:method}), so we do not claim the Elastic Net beats every linear variant.
+
+\subsection{Feature Ablation}
+% Slides p.15 (10%): same model, split and tuning; only the feature set changes.
+% Set A raw, Set B top-k (inside each fold; justify k), Set C ours. Beat A and B
+% by more than fold-to-fold variation? Slices
+% (model/results/tables/final_test/slice_metrics.csv). Worth the cost?
+Table~\ref{tab:ablation}(a) changes only the feature set, with the same model family, folds and tuning grid.
+Adding QualityArea to the raw features (Set C) lowers CV MAE from 13{,}750 to 13{,}366~USD and CV RMSE by 6.8\%.
+The MAE gain is smaller than one fold SD, but RMSE drops in all five folds, both here and under the controlled Ridge test (b), so the interaction mainly fixes large errors.
+Slicing the out-of-fold predictions shows where: QualityArea lowers RMSE by 11.5\% for the largest third of homes by living area and by 13.7\% for OverallQual $\geq 8$ ($n = 182$), but changes it by at most 2.1\% elsewhere, as expected for a quality $\times$ size interaction.
+Ranking features does not work: the MI top-20 set (Set B, re-selected inside each fold; $k = 20$ keeps the strongest quarter of the 73 candidates) is 3{,}600~USD worse in MAE than Set C, and $k = 15$ is worse still.
+Adding the three engineered features to it cuts RMSE by 11\% but still trails Set A by 5\%: selection discards information the features cannot restore.
+
+Table~\ref{tab:ablation}(b) tests each hypothesis with a fixed Ridge model.
+H1 is supported: RMSE falls by 5.7\%, in all five folds.
+H2 helps relative to raw lot area ($-1.1\%$) but adds nothing beyond the Box-Cox transform already in the pipeline.
+H3 reduces three columns to one at a 1.1\% RMSE gain, within our 2\% tolerance.
+We keep only QualityArea, because H2 and H3 change the error by about 1\%, well inside fold-to-fold variation; all three cost nothing to compute.
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}l r r@{}}
+\toprule
+\multicolumn{3}{@{}l}{\textit{(a) Elastic Net, tuned per set}} \\
+\textbf{Feature set} & \textbf{CV MAE} & \textbf{CV RMSE} \\
+\midrule
+A: Raw                  & 13{,}750 $\pm$ 827   & 21{,}376 $\pm$ 3{,}271 \\
+B: MI top-20            & 16{,}966 $\pm$ 1{,}269 & 25{,}286 $\pm$ 2{,}906 \\
+C: Raw + QualityArea    & \textbf{13{,}366 $\pm$ 809} & \textbf{19{,}925 $\pm$ 2{,}274} \\
+\midrule
+\multicolumn{3}{@{}l}{\textit{(b) Hypotheses, Ridge ($\alpha = 10$)}} \\
+\textbf{Change} & \textbf{$\Delta$RMSE} & \textbf{Folds improved} \\
+\midrule
+H1: + QualityArea               & $-1{,}222$ & 5/5 \\
+H2: LotArea $\rightarrow$ log   & $-241$     & 4/5 \\
+H2: Box-Cox $\rightarrow$ log   & $-2$       & 3/5 \\
+H3: 3 areas $\rightarrow$ TotalSF & $-235$   & 3/5 \\
+\bottomrule
+\end{tabular}
+\caption{Feature ablation on the same 5 folds (USD). (b) Negative $\Delta$RMSE is an improvement; fold counts are descriptive, not significance tests.}
+\label{tab:ablation}
+\end{table}

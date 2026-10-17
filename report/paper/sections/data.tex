@@ -1,0 +1,46 @@
+% Budget: ~1.5 columns  |  12 pts.  Slides p.8.
+% Sources: data/README.md (P1); model/notebooks/03,05 (P3: fold-local preprocessing);
+%          results/tables/01_dataset_summary.md (I2).
+\section{Task Definition and Data}
+\label{sec:data}
+
+\subsection{Task Definition}
+\textbf{Target.} The sale price of a residential property in US dollars.
+In the training data it ranges from 34{,}900 to 745{,}000~USD, with a median of 165{,}000~USD.
+\textbf{Unit of prediction.} One row is one recorded sale of one house.
+\textbf{Prediction time and inputs.} We predict when a property is prepared for listing.
+The inputs are the house's physical, quality and location attributes (e.g., areas, quality grades, construction year, neighborhood).
+Because the time from listing to sale is unknown, we conservatively exclude every field of the transaction record (sale year and month, sale type, sale condition) and features derived from them, such as house age.
+
+\subsection{Data}
+\textbf{Source.} We use the Kaggle release \citep{kaggle2016house} of the Ames Housing data \citep{decock2011ames}: 1{,}460 sales from 2006--2010 with 79 attributes, recorded by the Ames City Assessor's Office.
+\textbf{Split.} We sort by Id and hold out 292 sales as a sealed test set (random seed 42), leaving 1{,}168 for training.
+We remove two training sales with more than 4{,}000~sq~ft of living area but prices below 300{,}000~USD (Ids 524 and 1299), which leaves 1{,}166.
+They contradict the strong size--price relation and would distort a linear fit; the test set is untouched (Table~\ref{tab:data}).
+
+\textbf{Preprocessing.} Every learned step is fitted inside each training fold (Figure~\ref{fig:pipeline}).
+\emph{Missing values:} where NA means a facility is absent (no pool, no garage), we encode ``None'' or 0; LotFrontage takes its neighborhood median, and the few remaining gaps the median or mode.
+\emph{Dropped columns:} Utilities is almost constant, and GarageYrBlt is missing exactly for houses without a garage, so any filled value would be artificial.
+\emph{Encoding:} 22 ordered categories (e.g., quality grades) are mapped to integers and 19 nominal ones are one-hot encoded.
+\emph{Skew and scale:} numeric features with $|\text{skew}| > 0.75$ get a Box-Cox transform ($\lambda = 0.15$), then a RobustScaler, which is less sensitive to outliers.
+\emph{Target:} we model $\log(1+\text{price})$, which cuts the skewness from 1.74 to 0.12; predictions are converted back to USD before any error is computed.
+Under the same folds and grid, the log target lowers the Elastic Net's CV MAE on the raw features from 18{,}362 to 13{,}750~USD.
+
+\begin{table}[t]
+\centering
+\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}l l r r r@{}}
+\toprule
+\textbf{Feature} & \textbf{Unit} & \textbf{Mean $\pm$ SD} & \textbf{Median} & \textbf{Max} \\
+\midrule
+SalePrice   & USD     & 181{,}442 $\pm$ 77{,}264 & 165{,}000 & 745{,}000 \\
+OverallQual & 1--10   & 6.1 $\pm$ 1.4            & 6         & 10 \\
+GrLivArea   & sq ft   & 1{,}527 $\pm$ 524        & 1{,}473   & 5{,}642 \\
+LotArea     & sq ft   & 10{,}690 $\pm$ 10{,}759  & 9{,}600   & 215{,}245 \\
+TotalBsmtSF & sq ft   & 1{,}062 $\pm$ 441        & 998       & 6{,}110 \\
+\bottomrule
+\end{tabular}
+\caption{Summary statistics on the training split before removing two outliers ($n = 1{,}168$).}
+\label{tab:data}
+\end{table}

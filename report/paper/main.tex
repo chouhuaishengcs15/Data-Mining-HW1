@@ -1,0 +1,90 @@
+\documentclass[11pt]{article}
+
+% Course rule (HW1 slides p.4): use [preprint] -- shows names and page numbers.
+\usepackage[preprint]{acl}
+
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{inconsolata}
+\usepackage{graphicx}
+
+% Chinese member names (works with pdfLaTeX, incl. Overleaf). bsmi = Traditional Chinese Ming font.
+\usepackage{CJKutf8}
+\newcommand{\zh}[1]{\begin{CJK}{UTF8}{bsmi}#1\end{CJK}}
+% bsmi lacks the glyph for 瀞; take it from IPAex Mincho (ipaex-type1, in TeX Live / Overleaf).
+\newcommand{\zhalt}[1]{\begin{CJK}{UTF8}{ipxm}#1\end{CJK}}
+
+% Tables and math
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xurl}  % allow long URLs in the bibliography to break
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{siunitx}
+
+% Compact lists (item spacing only; margins and font size untouched).
+\usepackage{enumitem}
+\setlist[itemize]{noitemsep, topsep=2pt}
+
+% Placeholder marker. Shows red text in the PDF so unfinished parts are easy to spot.
+% Before submission: search for \todo and make sure none are left.
+\usepackage{xcolor}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+% ===================== Course requirements (HW1 slides) =====================
+% - At most 6 pages EXCLUDING references. Pages after 6 are not read.
+%   "Contributions of Each Member" counts toward the 6 pages.
+% - Keep the template's margins and font size (no \vspace / font-size hacks).
+% - Front matter: title, team ID, every member's name + student ID, GitHub URL.
+%   No GitHub URL on page 1  =>  report scored 0.
+% - Sections must appear in this order (titles may be adapted).
+% - Figures/tables: numbered, captioned, referenced in text, axes with units.
+% - Output file name on E3: HW1_<TeamID>_report.pdf
+%
+% Page budget (12 columns in total; roughly follows the section points):
+%   Abstract + §1  ~1.25 col  (7 pts)    §5  ~1.5 col   (13 pts)
+%   §2             ~1.0  col  (6 pts)    §6  ~1.0 col   (10 pts)
+%   §3             ~1.5  col  (12 pts)   §7  ~1.75 col  (18 pts)
+%   §4             ~1.25 col  (10 pts)   §8  ~1.75 col  (16 pts)
+%   §9             ~0.5  col  (5 pts)    Contributions ~0.5 col (3 pts)
+% ============================================================================
+
+% Suggested title (discuss with the team):
+%   Pricing Before the Sale: An Interpretable Elastic Net for Ames House Valuation
+\title{Pricing Before the Sale: An Interpretable Elastic Net for Ames Houses}
+
+\author{
+  \textbf{Group 3} \\
+  \zh{周懷聖} (315554046), \zh{范}\zhalt{瀞}\zh{予} (314554031), \zh{陳湋昱} (314554010), \zh{李宗穎} (312581021),
+\\
+  \zh{劉嘉豪} (315552031), \zh{張翊鞍} (314554035), \zh{陳柏淮} (315554045), \zh{陳家祥} (315552025)
+\\
+  \url{https://github.com/chouhuaishengcs15/Data-Mining-HW1}
+}
+
+\begin{document}
+\maketitle
+
+% Owner: W1 = Abstract, §1, §2, §9
+%        W2 = §3--§8
+%        I3 = Contributions of Each Member (collects records)
+% All numbers must come from the Results Master Sheet (I2).
+
+\input{sections/abstract}        % W1
+\input{sections/introduction}    % W1  §1
+\input{sections/related_work}    % W1  §2
+\input{sections/data}            % W2  §3
+\input{sections/eda}             % W2  §4
+\input{sections/method}          % W2  §5
+\input{sections/experiments}     % W2  §6
+\input{sections/results}         % W2  §7
+\input{sections/analysis}        % W2  §8
+\input{sections/conclusion}      % W1  §9 Conclusion & Limitations
+\input{sections/contributions}   % I3  (counts toward the 6 pages)
+
+\bibliography{references}
+
+\end{document}

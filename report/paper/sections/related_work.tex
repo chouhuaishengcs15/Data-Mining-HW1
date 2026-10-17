@@ -1,0 +1,42 @@
+% Owner: W1  |  Budget: ~1 column  |  6 pts
+% Slides p.7: >= 3 real, verifiable sources; for each summarize task, data,
+% features, model and reported error; state explicitly what we do differently.
+% Notes and verification status: report/related_work.md
+% TODO: lu2017hybrid (Lasso beats XGBoost on the Kaggle Ames data) would strengthen
+%       the Ames paragraph, but its numbers are only known second-hand. Add only
+%       after reading the original paper.
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Hedonic and regularized regression.}
+Hedonic pricing treats a house as a bundle of attributes with implicit prices \citep{rosen1974hedonic}, which makes linear regression the traditional valuation tool.
+Correlated size attributes and many categories make ordinary least squares unstable.
+Ridge \citep{hoerl1970ridge}, Lasso \citep{tibshirani1996lasso} and Elastic Net \citep{zou2005elastic} address this through L2 shrinkage, L1 selection, or both.
+
+\paragraph{Machine learning for house prices.}
+Table~\ref{tab:related} summarizes prior studies, where flexible learners usually win.
+A neural network beat a hedonic model in Christchurch \citep{limsombunchai2004house}, but on only 40 test houses and with listing rather than sale prices.
+Tree ensembles lead on large samples in Hong Kong \citep{ho2021predicting} and Beijing \citep{truong2020housing}, the latter using the transaction date as an input.
+On Ames, however, \citet{sharma2024optimal} found linear regression within 0.02 in $R^2$ of XGBoost and with the lowest MAE.
+
+\paragraph{Our position.}
+We differ in three ways: (i)~we use only information available before a sale; (ii)~we judge success against a threshold fixed before testing and test the gap to a strong nonlinear baseline for significance instead of reporting a single split; (iii)~we target the small-sample, high-dimensional Ames setting, where a regularized linear model may match a tree ensemble while keeping hedonic interpretability.
+
+\begin{table*}[t]
+\centering
+\scriptsize
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}p{3.4cm} >{\raggedright\arraybackslash}p{2.5cm} >{\raggedright\arraybackslash}p{3.6cm}@{}}
+\toprule
+\textbf{Work} & \textbf{Data ($n$)} & \textbf{Features} & \textbf{Models} & \textbf{Best test error} \\
+\midrule
+\citet{limsombunchai2004house} & Christchurch listings (200) & Size, age, rooms, garages, amenities, location & Hedonic, ANN & ANN $R^2$ 0.900 (hedonic 0.619) \\
+\citet{ho2021predicting} & Hong Kong sales ($\sim$40k) & Floor area, age, floor, travel time to CBD & SVM, RF, GBM & GBM $R^2$ 0.904; RMSE 0.089 (log price) \\
+\citet{truong2020housing} & Beijing sales (232k) & Location, area, age, building type, trade time & RF, XGB, LGBM, stacking & Stacking RMSLE 0.164 (price per m$^2$) \\
+\citet{sharma2024optimal} & Ames sales (2,930) & Ames attributes, RF-selected & LR, RF, SVR, MLP, XGB & XGB $R^2$ 0.930 (LR 0.910) \\
+\midrule
+\textbf{Ours} & Ames, Kaggle (1,458) & Pre-sale attributes + quality $\times$ area & OLS, Ridge, Lasso, EN; RF & EN MAE 14,423 USD; $R^2$ 0.935 \\
+\bottomrule
+\end{tabular}
+\caption{Prior house price prediction studies. Errors come from different data and scales and give context, not a direct comparison.}
+\label{tab:related}
+\end{table*}

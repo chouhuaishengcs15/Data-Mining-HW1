@@ -19,3 +19,14 @@ env/
 # Temporary files
 *.tmp
 *.log
+
+# LaTeX build files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.out
+*.synctex.gz
+report/paper/main.pdf
+report/paper_overleaf.zip

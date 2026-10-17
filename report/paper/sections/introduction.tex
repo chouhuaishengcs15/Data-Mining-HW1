@@ -1,0 +1,25 @@
+% Owner: W1  |  Budget (with Abstract): ~1.25 column  |  7 pts (shared with Abstract)
+% Slides p.6: application and why it matters; target users and the decision;
+% a precise research question; 2--3 contributions, each verified later in §7--§8.
+% Sources: research_story/README.md (I1), model/results/tables/final_test/ (P3).
+% TODO: re-check every number against the Results Master Sheet (I2) before submission.
+\section{Introduction}
+\label{sec:intro}
+
+Before a house is listed, the seller and their agent must commit to an asking price.
+A price set too high keeps the listing on the market, and one set too low gives away money that cannot be recovered.
+Formal appraisals cost time and money; we offer a fast, data-driven estimate.
+Our target users are sellers and agents setting the asking price, and buyers checking whether it deviates from a model estimate.
+
+The estimate may use only what is known before the sale, so we exclude the sale date, type and condition (\S\ref{sec:data}).
+We call it usable if its mean absolute error (MAE) on held-out houses is at most 15{,}000~USD, about 9\% of the median price, a threshold fixed before testing (\S\ref{sec:setup}).
+
+On the Ames Housing data \citep{decock2011ames}, a small but high-dimensional problem, linear models fit the hedonic view of a price as a sum of implicit attribute prices \citep{rosen1974hedonic} and stay interpretable, yet recent work often favors tree ensembles (\S\ref{sec:related}).
+We therefore ask:
+\textbf{RQ:} \emph{Using only attributes available before a sale, can a regularized linear model keep the error within a pre-specified threshold (MAE $\leq$ 15{,}000~USD) while performing no worse than a Random Forest?}
+Our contributions are:
+\begin{itemize}
+  \item \textbf{A leakage-free pre-sale setting} that uses only inputs available when a property is priced for listing (\S\ref{sec:data}).
+  \item \textbf{Hypothesis-driven features validated by ablation.} A quality $\times$ living-area interaction lowers the cross-validated RMSE by 6.8\% in every fold, whereas top-20 feature selection hurts accuracy (\S\ref{sec:results}).
+  \item \textbf{An interpretable linear model that beats a nonlinear baseline.} Elastic Net meets the threshold with a test MAE of 14{,}423~USD and beats a Random Forest by 1{,}961~USD per house ($p = 0.017$; \S\ref{sec:results}--\S\ref{sec:analysis}).
+\end{itemize}
