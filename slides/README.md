@@ -1,17 +1,26 @@
 # Slides
 
-- Google Slides：（連結：https://docs.google.com/presentation/d/1F9kxe0mGW_3vB1tL9X6OqFeKgJPxgYAzhY7fYiQ1x_s/edit?usp=sharing）
-- 報告時間：8 分鐘，共 12 張
-- 最終 PPT 版本放在本資料夾
+- Google Slides：（連結：TBD）
+- 報告時間：8 分鐘，共 15 張
+- 最終提交檔：`HW1_<TeamID>_presentation.pdf`（放在本資料夾）
 
 ## 投影片架構
 
-| #     | 內容                                         | 講者 |
-| ----- | -------------------------------------------- | ---- |
-| 1–3   | 標題、使用情境、研究問題與 15,000 USD 門檻   | W1   |
-| 4–6   | 資料切分、EDA（QualityArea）、Pipeline       | W2   |
-| 7–10  | 主結果、Feature Ablation、係數分析、誤差分析 | W2   |
-| 11–12 | 相關研究、結論與限制                         | W1   |
+依作業規定的口頭報告順序：
+
+| # | 內容 | 講者 |
+|---|---|---|
+| 1 | Title & team | W1 |
+| 2 | Motivation | W1 |
+| 3 | Problem formulation | W1 |
+| 4–5 | Data & key EDA insight | W2 |
+| 6 | Method（pipeline、model choice） | W2 |
+| 7 | Challenges | W2 |
+| 8–10 | Evaluation（protocol、threshold、baselines、results、ablation） | W2 |
+| 11–12 | Interpretation（coefficients、error analysis） | W2 |
+| 13 | Related work | W1 |
+| 14 | Team contributions | W1 |
+| 15 | Conclusion & limitations | W1 |
 
 每張投影片的講者備註都有講稿重點與建議秒數。
 
